@@ -1,59 +1,85 @@
-﻿using HarmonyLib;
+﻿using AntiSMTCheat;
+using HarmonyLib;
 using Mirror;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
 
 public static class PermissionEnforcer {
+
+    private static readonly string InfractionLogPath = Path.Combine(Application.persistentDataPath, "PermissionInfractions.log");
+    private static readonly Dictionary<string, int> InfractionCounts = [];
+    private static readonly Dictionary<string, int> InfractionLimits = [];
+    private static readonly System.Random InfractionRng = new();
+
     private static bool IsHostConnection(NetworkConnectionToClient conn) {
         return conn.connectionId == 0;
     }
 
     public static bool CommandPermissionPrefix(NetworkBehaviour obj, NetworkConnectionToClient senderConnection, MethodBase __originalMethod) {
         string methodKey = $"{obj.GetType().Name}.{__originalMethod.Name}";
+        string offender = senderConnection.address ?? "unknown";
 
-        Debug.Log($"[AntiSMTCheat] CommandPermissionPrefix called for: {obj.GetType().Name}");
+        Debug.Log($"[AntiSMTCheat] CommandPermissionPrefix called for: {methodKey}");
 
-        if (!PermissionDatabase.CommandPermissionMap.TryGetValue(methodKey, out PermissionDatabase.CommandPermission requiredPermission)) {
+        if (IsHostConnection(senderConnection)) {
+            Debug.Log($"[AntiSMTCheat] Host connection detected. Allowing command {methodKey}.");
+            return true;
+        }
+
+        if (!PermissionDatabase.CommandPermissionMap.TryGetValue(methodKey, out var requiredPermission)) {
             Debug.LogWarning($"[AntiSMTCheat] No permission registered for {methodKey}. Denying.");
-            //senderConnection?.Disconnect();
+            LogInfraction(offender, obj.GetType().Name, __originalMethod.Name, "Unregistered command attempted", senderConnection);
             return false;
         }
 
-        if (!IsHostConnection(senderConnection)) {
-            string offender = senderConnection.address ?? "unknown";
-            Debug.LogWarning($"[AntiSMTCheat] Blocked non-host command from {offender} ({obj.GetType().Name})");
-            LogInfraction(offender, obj.GetType().Name, __originalMethod.Name, "Non-host attempted restricted command");
-            //senderConnection.Disconnect();
+        var identity = senderConnection.identity;
+        if (identity == null) {
+            Debug.LogWarning($"[AntiSMTCheat] Sender has no NetworkIdentity.");
             return false;
         }
 
-        Debug.Log($"[AntiSMTCheat] Host command allowed: {obj.GetType().Name} requiring {requiredPermission} permission.");
+        var permissions = identity.GetComponent<PlayerPermissions>();
+        if (permissions == null) {
+            Debug.LogWarning($"[AntiSMTCheat] No PlayerPermissions found on identity.");
+            LogInfraction(offender, obj.GetType().Name, __originalMethod.Name, "Missing PlayerPermissions component", senderConnection);
+            return false;
+        }
+
+        bool hasPermission = PermissionAssignment.HasRequiredPermission(permissions, requiredPermission);
+
+        if (!hasPermission) {
+            Debug.LogWarning($"[AntiSMTCheat] Player {identity.gameObject.name} lacks permission {requiredPermission} for {methodKey}.");
+            LogInfraction(offender, obj.GetType().Name, __originalMethod.Name, $"Lacked required permission: {requiredPermission}", senderConnection);
+            return false;
+        }
+
+        Debug.Log($"[AntiSMTCheat] Permission granted: {identity.gameObject.name} -> {methodKey}");
         return true;
     }
 
-    private static readonly string InfractionLogPath = Path.Combine(Application.persistentDataPath, "PermissionInfractions.log");
-
-    private static void LogInfraction(string offender, string objType, string method, string reason) {
+    private static void LogInfraction(string offender, string objType, string method, string reason, NetworkConnectionToClient senderConnection) {
         string timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         string logEntry = $"[{timestamp}] Offender: {offender}, Command: {objType}.{method}, Reason: {reason}";
+
         File.AppendAllText(InfractionLogPath, logEntry + "\n");
         Debug.LogWarning($"[AntiSMTCheat] {logEntry}");
-    }
 
+        if (!InfractionCounts.TryGetValue(offender, out int currentCount)) {
+            currentCount = 0;
+        }
+        InfractionCounts[offender] = ++currentCount;
 
-    [HarmonyPatch(typeof(NetworkBehaviour))]
-    [HarmonyPatch("SendCommandInternal")]
-    public static class Patch_NetworkBehavior_SendCommandInternal {
-        private static bool Prefix(NetworkBehaviour __instance, string functionName) {
-            NetworkConnectionToClient conn = __instance.connectionToClient;
-            if (conn == null || !__instance.isServer || !__instance.isClient) {
-                Debug.Log($"[AntiSMTCheat] Blocking command {functionName} from non-host.");
-                //conn?.Disconnect();
-                return false;
-            }
+        if (!InfractionLimits.TryGetValue(offender, out int limit)) {
+            limit = InfractionRng.Next(80, 121);
+            InfractionLimits[offender] = limit;
+            Debug.Log($"[AntiSMTCheat] Assigned new infraction limit to {offender}: {limit}");
+        }
 
-            return true;
+        if (currentCount >= limit) {
+            Debug.LogWarning($"[AntiSMTCheat] {offender} exceeded infraction limit ({currentCount}/{limit}). Disconnecting.");
+            senderConnection?.Disconnect();
         }
     }
 }

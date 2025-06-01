@@ -6,14 +6,15 @@ using System;
 using System.Linq;
 using System.Reflection;
 
+namespace AntiSMTCheat;
+
 [BepInPlugin("com.yourname.AntiSMTCheat", "AntiSMTCheat", "1.0.0")]
 public class AntiSMTCheatPlugin : BaseUnityPlugin {
 
     private void Awake() {
         Harmony harmony = new("com.yourname.AntiSMTCheat");
-        PermissionAssignment.LoadPermissions();
         PatchAllCommandsWithPermissionCheck(harmony);
-        Logger.LogInfo("AntiSMTCheat initialized.");
+        Logger.LogInfo("[AntiSMTCheat]  AntiSMTCheat initialized.");
     }
 
     private void PatchAllCommandsWithPermissionCheck(Harmony harmony) {
@@ -35,10 +36,9 @@ public class AntiSMTCheatPlugin : BaseUnityPlugin {
 
                     _ = harmony.Patch(serverMethod, prefix: new HarmonyMethod(prefix));
 
-
-                    Logger.LogInfo($"Patched command: {type.FullName}.{serverMethod.Name}");
+                    Logger.LogInfo($"[AntiSMTCheat] Patched command: {type.FullName}.{serverMethod.Name}");
                 } catch (Exception ex) {
-                    Logger.LogWarning($"Failed to patch {type.FullName}.InvokeUserCode_{cmdMethod.Name}: {ex.Message}");
+                    Logger.LogWarning($"[AntiSMTCheat] Failed to patch {type.FullName}.InvokeUserCode_{cmdMethod.Name}: {ex.Message}");
                 }
             }
         }

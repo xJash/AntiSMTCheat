@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 
 public static class PermissionDatabase {
-    public enum CommandPermission {
-        Cashier,
-        General,
-        Manager,
-        Restocker,
-        Text,
-        Security
-    }
-
+        public enum CommandPermission {
+            General, 
+            Manager,
+            Cashier,
+            Restocker,
+            Security,
+            Text
+        }
+    
     public static readonly IReadOnlyDictionary<string, CommandPermission> CommandPermissionMap =
         new Dictionary<string, CommandPermission>
         {
