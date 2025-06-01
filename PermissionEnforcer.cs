@@ -14,7 +14,7 @@ public static class PermissionEnforcer {
 
         Debug.Log($"[AntiSMTCheat] CommandPermissionPrefix called for: {obj.GetType().Name}");
 
-        if (!PermissionDatabase.CommandPermissions.TryGetValue(methodKey, out PermissionDatabase.CommandPermission requiredPermission)) {
+        if (!PermissionDatabase.CommandPermissionMap.TryGetValue(methodKey, out PermissionDatabase.CommandPermission requiredPermission)) {
             Debug.LogWarning($"[AntiSMTCheat] No permission registered for {methodKey}. Denying.");
             //senderConnection?.Disconnect();
             return false;
@@ -45,7 +45,7 @@ public static class PermissionEnforcer {
     [HarmonyPatch(typeof(NetworkBehaviour))]
     [HarmonyPatch("SendCommandInternal")]
     public static class Patch_NetworkBehavior_SendCommandInternal {
-        private static bool Prefix(NetworkBehaviour __instance, string functionName, int cmdHash, NetworkWriter writer, int channelId, bool requiresAuthority) {
+        private static bool Prefix(NetworkBehaviour __instance, string functionName) {
             NetworkConnectionToClient conn = __instance.connectionToClient;
             if (conn == null || !__instance.isServer || !__instance.isClient) {
                 Debug.Log($"[AntiSMTCheat] Blocking command {functionName} from non-host.");

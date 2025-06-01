@@ -19,7 +19,7 @@ namespace AntiSMTCheat {
         }
 
         private static readonly string PermissionSavePath = Path.Combine(Application.persistentDataPath, "UserPermissions.json");
-        private static Dictionary<string, HashSet<Role>> UserRoles = new Dictionary<string, HashSet<Role>>();
+        private static Dictionary<string, HashSet<Role>> UserRoles = [];
 
         public static void OnChatReceived(string playerName, string message) {
             Debug.Log($"[AntiSMTCheat] OnChatReceived called by '{playerName}' with message: {message}");
@@ -45,21 +45,23 @@ namespace AntiSMTCheat {
             }
 
             if (!UserRoles.ContainsKey(targetUser)) {
-                UserRoles[targetUser] = new HashSet<Role>();
+                UserRoles[targetUser] = [];
             }
 
             if (op == "+") {
                 bool added = UserRoles[targetUser].Add(role);
-                if (added)
+                if (added) {
                     Debug.Log($"[AntiSMTCheat] {playerName} granted role {role} to {targetUser}");
-                else
+                } else {
                     Debug.Log($"[AntiSMTCheat] Role {role} was already assigned to {targetUser}");
+                }
             } else {
                 bool removed = UserRoles[targetUser].Remove(role);
-                if (removed)
+                if (removed) {
                     Debug.Log($"[AntiSMTCheat] {playerName} revoked role {role} from {targetUser}");
-                else
+                } else {
                     Debug.Log($"[AntiSMTCheat] Role {role} was not assigned to {targetUser}");
+                }
             }
 
             SavePermissions();
@@ -84,23 +86,23 @@ namespace AntiSMTCheat {
             try {
                 string json = File.ReadAllText(PermissionSavePath);
                 SerializableUserRoles data = JsonUtility.FromJson<SerializableUserRoles>(json);
-                UserRoles = data?.ToDictionary() ?? new Dictionary<string, HashSet<Role>>();
+                UserRoles = data?.ToDictionary() ?? [];
                 Debug.Log("[AntiSMTCheat] Permissions loaded.");
             } catch (Exception ex) {
                 Debug.LogError($"[AntiSMTCheat] Failed to load permissions: {ex}");
-                UserRoles = new Dictionary<string, HashSet<Role>>();
+                UserRoles = [];
             }
         }
 
         [Serializable]
         public class SerializableUserRoles {
-            public List<UserRoleEntry> entries = new List<UserRoleEntry>();
+            public List<UserRoleEntry> entries = [];
 
             public SerializableUserRoles(Dictionary<string, HashSet<Role>> source) {
-                foreach (var kvp in source) {
+                foreach (KeyValuePair<string, HashSet<Role>> kvp in source) {
                     entries.Add(new UserRoleEntry {
                         username = kvp.Key,
-                        roles = kvp.Value.Select(r => r.ToString()).ToList()
+                        roles = [.. kvp.Value.Select(r => r.ToString())]
                     });
                 }
             }
@@ -115,19 +117,19 @@ namespace AntiSMTCheat {
             [Serializable]
             public class UserRoleEntry {
                 public string username;
-                public List<string> roles = new List<string>();
+                public List<string> roles = [];
             }
         }
     }
 
     [HarmonyPatch]
     public static class Patch_ChatCommand {
-        static MethodBase TargetMethod() {
-            var type = typeof(PlayerObjectController);
+        private static MethodBase TargetMethod() {
+            Type type = typeof(PlayerObjectController);
             return type.GetMethod("UserCode_CmdSendMessage__String__NetworkConnectionToClient", BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
-        static void Prefix(string message, NetworkConnectionToClient sender) {
+        private static void Prefix(string message, NetworkConnectionToClient sender) {
             string playerName = "Unknown";
 
             if (sender != null && sender.identity != null) {
