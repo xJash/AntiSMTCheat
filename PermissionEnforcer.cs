@@ -3,6 +3,7 @@ using HarmonyLib;
 using Mirror;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -47,7 +48,8 @@ public static class PermissionEnforcer {
             return false;
         }
 
-        bool hasPermission = PermissionAssignment.HasRequiredPermission(permissions, requiredPermission);
+        bool hasPermission = requiredPermission.Any(p => PermissionAssignment.HasRequiredPermission(permissions, p));
+
 
         if (!hasPermission) {
             Debug.LogWarning($"[AntiSMTCheat] Player {identity.gameObject.name} lacks permission {requiredPermission} for {methodKey}.");

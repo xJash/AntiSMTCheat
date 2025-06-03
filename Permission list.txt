@@ -1,0 +1,213 @@
+To load into the game:
+PlayerObjectController.InvokeUserCode_CmdSetPlayerName__String.
+PlayerNetwork.InvokeUserCode_CmdChangeCharacter__Int32.
+PlayerNetwork.InvokeUserCode_CmdChangeHat__Int32.
+
+This just periodically runs in the background when employees are doing things, aswell as several other various methods:
+AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
+
+To send a message:
+PlayerObjectController.InvokeUserCode_CmdSendMessage__String__NetworkConnectionToClient.
+General Permission
+
+To disconnect host:
+GameData.InvokeUserCode_CmdHostDisconnect.
+None
+
+To unlock perks:
+GameData.InvokeUserCode_CmdAcquireFranchise__Int32.
+Manager
+
+Buying product from manager blackboard:
+ManagerBlackboard.InvokeUserCode_CmdAddProductToSpawnList__Int32.
+GameData.InvokeUserCode_CmdAlterFunds__Single.
+GameData.InvokeUserCode_CmdmoneySpentOnProducts__Single..
+Manager
+
+To destroy pillars/beams:
+DemolishableManager.InvokeUserCode_CmdDemolishItem__Int32__Int32.
+PlayerNetwork.InvokeUserCode_CmdPlayAnimation__Int32.
+Manager
+
+To open/close doors:
+OtherPropsBehaviour.InvokeUserCode_CmdUpdateDoorSetter__Int32.
+Manager
+
+To close a checkout off:
+Data_Container.InvokeUserCode_CmdCloseCheckout.
+Cashier
+Manager
+
+Buy an empty box:
+GameData.InvokeUserCode_CmdAlterFunds__Single.
+ManagerBlackboard.InvokeUserCode_CmdSpawnBoxEmpty.
+Manager
+
+Clicking customer in security console:
+NPC_Info.InvokeUserCode_CmdSurveillanceSet.
+Security, Manager
+
+Changing supermarket name:
+NetworkSpawner.InvokeUserCode_CmdSetSupermarketText__String.
+Manager
+
+Fire employee:
+NPC_Manager.InvokeUserCode_CmdDismissEmployeeData__Int32.
+Manager
+
+Hire employee:
+NPC_Manager.InvokeUserCode_CmdHireEmployeeData__Int32__String.
+Manager
+
+To trash a box:
+PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
+General
+
+To recycle a box:
+PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
+GameData.InvokeUserCode_CmdAlterFunds__Single.
+AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
+
+To recycle a cardboard bale:
+PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
+GameData.InvokeUserCode_CmdAlterFunds__Single.
+AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
+
+To open store:
+GameData.InvokeUserCode_CmdOpenSupermarket.
+
+To close store:
+GameData.InvokeUserCode_CmdEndDayFromButton.
+AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
+AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
+
+Hitting thief with a broom:
+PlayerNetwork.InvokeUserCode_CmdPlayAnimation__Int32.
+NPC_Info.InvokeUserCode_CmdAnimationPlay__Int32.
+
+Picking up product thief drops:
+StolenProductSpawn.InvokeUserCode_CmdRecoverStolenProduct.
+GameData.InvokeUserCode_CmdAlterFunds__Single.
+
+To open store
+GameData.InvokeUserCode_CmdOpenSupermarket.
+
+To price things:
+PlayerNetwork.InvokeUserCode_CmdPlayPricingSound.
+ProductListing.InvokeUserCode_CmdUpdateProductPrice__Int32__Single.
+
+Clicking product on checkout:
+ProductCheckoutSpawn.InvokeUserCode_CmdAddProductValueToCheckout.
+AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
+
+Clicking cash payment on checkout:
+Data_Container.InvokeUserCode_CmdActivateCashMethod__Int32.
+
+Clicking credit card on chechkout:
+Data_Container.InvokeUserCode_CmdActivateCreditCardMethod.
+
+Charging amount on credit card payment:
+Data_Container.InvokeUserCode_CmdReceivePayment__Single.
+GameData.InvokeUserCode_CmdAlterFunds__Single.
+AchievementsManager.InvokeUserCode_CmdMaxFundsCheckouted__Single.
+AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
+
+Giving cash change:
+Data_Container.InvokeUserCode_CmdReceivePayment__Single.
+GameData.InvokeUserCode_CmdAlterFunds__Single.
+AchievementsManager.InvokeUserCode_CmdMaxFundsCheckouted__Single.
+AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
+.
+Hitting random customer:
+PlayerNetwork.InvokeUserCode_CmdPlayAnimation__Int32.
+NPC_Info.InvokeUserCode_CmdAnimationPlay__Int32.
+
+To stock product:
+AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
+Data_Container.InvokeUserCode_CmdUpdateArrayValues__Int32__Int32__Int32.
+
+To remove product:
+Data_Container.InvokeUserCode_CmdUpdateArrayValues__Int32__Int32__Int32.
+
+Change employee name:
+NPC_Manager.InvokeUserCode_CmdChangeEmployeeName__Int32__String.
+
+Assign employee:
+NPC_Manager.InvokeUserCode_CmdChangeEmployeePriority__Int32__Int32.
+
+Load priorities to employee:
+NPC_Manager.InvokeUserCode_CmdLoadPrioritiesLayout__Int32[].
+
+Taking a loan:
+DebtManager.InvokeUserCode_CmdRequestLoan__Int32__Int32__Int32.
+
+Buy storage space:
+UpgradesManager.InvokeUserCode_CmdAddStorage__Int32.
+
+Picking up box from storage:
+PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
+Data_Container.InvokeUserCode_CmdUpdateArrayValuesStorage__Int32__Int32__Int32.
+PlayerNetwork.InvokeUserCode_CmdSetBoxColorToEveryone__Int32.
+
+Putting box in storage:
+PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
+Data_Container.InvokeUserCode_CmdUpdateArrayValuesStorage__Int32__Int32__Int32.
+
+Picking up box from ground:
+PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
+NetworkSpawner.InvokeUserCode_CmdDestroyBox__GameObject.
+PlayerNetwork.InvokeUserCode_CmdSetBoxColorToEveryone__Int32.
+
+Putting box on ground:
+PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
+ManagerBlackboard.InvokeUserCode_CmdSpawnBoxFromPlayer__Vector3__Int32__Int32__Single.
+
+Picking up tools:
+PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
+NetworkSpawner.InvokeUserCode_CmdDestroyBox__GameObject.
+
+Dropping tools:
+PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
+NetworkSpawner.InvokeUserCode_CmdSpawnProp__Int32__Vector3__Vector3.
+
+Cardboard baler:
+PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
+CardboardBaler.InvokeUserCode_CmdAddBoxToBaler.
+
+Buying structures:
+NetworkSpawner.InvokeUserCode_CmdSpawn__Int32__Vector3__Vector3.
+GameData.InvokeUserCode_CmdAlterFunds__Single.
+
+Selling structures:
+GameData.InvokeUserCode_CmdAlterFundsWithoutExperience__Single.
+NetworkSpawner.InvokeUserCode_CmdDestroyBox__GameObject.
+
+Moving structures:
+NetworkSpawner.InvokeUserCode_CmdObjectMove__GameObject__Vector3__Quaternion.
+
+Ride mini transport vehicle:
+MiniTransportBehaviour.InvokeUserCode_CmdRequestOwnership__GameObject.
+[Info   : Unity Log] AddEventHandlerComponent: PlayMakerTriggerEnter
+PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
+
+Honk mini transport vehicle:
+MiniTransportBehaviour.InvokeUserCode_CmdHorn.
+
+Run into stuff with mini transport vehicle:
+MiniTransportBehaviour.InvokeUserCode_CmdCollisionHit__Vector3__Single.
+
+Put product onto shelf from order tray:
+Data_Container.InvokeUserCode_CmdUpdateArrayValues__Int32__Int32__Int32.
+PlayerNetwork.InvokeUserCode_CmdUpdateTrayToEveryone__String.
+
+Put a box into mini transport vehicle:
+PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
+MiniTransportBehaviour.InvokeUserCode_CmdUpdateArrayValuesStorage__Int32__Int32__Int32.
+
+Take a box out of mini transport vehicle:
+PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
+MiniTransportBehaviour.InvokeUserCode_CmdUpdateArrayValuesStorage__Int32__Int32__Int32.
+PlayerNetwork.InvokeUserCode_CmdSetBoxColorToEveryone__Int32.
+
+Put product on sale:
+ProductListing.InvokeUserCode_CmdSetProductOnSale__Int32__Int32.
