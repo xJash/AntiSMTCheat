@@ -2,6 +2,7 @@ To load into the game:
 PlayerObjectController.InvokeUserCode_CmdSetPlayerName__String.
 PlayerNetwork.InvokeUserCode_CmdChangeCharacter__Int32.
 PlayerNetwork.InvokeUserCode_CmdChangeHat__Int32.
+General
 
 This just periodically runs in the background when employees are doing things, aswell as several other various methods:
 AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
@@ -9,10 +10,6 @@ AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
 To send a message:
 PlayerObjectController.InvokeUserCode_CmdSendMessage__String__NetworkConnectionToClient.
 General Permission
-
-To disconnect host:
-GameData.InvokeUserCode_CmdHostDisconnect.
-None
 
 To unlock perks:
 GameData.InvokeUserCode_CmdAcquireFranchise__Int32.
@@ -67,147 +64,183 @@ To recycle a box:
 PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
 GameData.InvokeUserCode_CmdAlterFunds__Single.
 AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
+Restocker
 
 To recycle a cardboard bale:
 PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
 GameData.InvokeUserCode_CmdAlterFunds__Single.
 AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
+Manager
 
 To open store:
 GameData.InvokeUserCode_CmdOpenSupermarket.
+Manager
 
 To close store:
 GameData.InvokeUserCode_CmdEndDayFromButton.
 AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
 AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
+Manager
 
 Hitting thief with a broom:
 PlayerNetwork.InvokeUserCode_CmdPlayAnimation__Int32.
 NPC_Info.InvokeUserCode_CmdAnimationPlay__Int32.
+Security
 
 Picking up product thief drops:
 StolenProductSpawn.InvokeUserCode_CmdRecoverStolenProduct.
 GameData.InvokeUserCode_CmdAlterFunds__Single.
+Security
 
 To open store
 GameData.InvokeUserCode_CmdOpenSupermarket.
+Manager
 
 To price things:
 PlayerNetwork.InvokeUserCode_CmdPlayPricingSound.
 ProductListing.InvokeUserCode_CmdUpdateProductPrice__Int32__Single.
+General
 
 Clicking product on checkout:
 ProductCheckoutSpawn.InvokeUserCode_CmdAddProductValueToCheckout.
 AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
+Cashier
 
 Clicking cash payment on checkout:
 Data_Container.InvokeUserCode_CmdActivateCashMethod__Int32.
+Cashier
 
 Clicking credit card on chechkout:
 Data_Container.InvokeUserCode_CmdActivateCreditCardMethod.
+Cashier
 
 Charging amount on credit card payment:
 Data_Container.InvokeUserCode_CmdReceivePayment__Single.
 GameData.InvokeUserCode_CmdAlterFunds__Single.
 AchievementsManager.InvokeUserCode_CmdMaxFundsCheckouted__Single.
 AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
+Cashier
 
 Giving cash change:
 Data_Container.InvokeUserCode_CmdReceivePayment__Single.
 GameData.InvokeUserCode_CmdAlterFunds__Single.
 AchievementsManager.InvokeUserCode_CmdMaxFundsCheckouted__Single.
 AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
-.
+Cashier
+
 Hitting random customer:
 PlayerNetwork.InvokeUserCode_CmdPlayAnimation__Int32.
 NPC_Info.InvokeUserCode_CmdAnimationPlay__Int32.
+General
 
 To stock product:
 AchievementsManager.InvokeUserCode_CmdAddAchievementPoint__Int32__Int32.
 Data_Container.InvokeUserCode_CmdUpdateArrayValues__Int32__Int32__Int32.
+Restocker
 
 To remove product:
 Data_Container.InvokeUserCode_CmdUpdateArrayValues__Int32__Int32__Int32.
+Restocker
 
 Change employee name:
 NPC_Manager.InvokeUserCode_CmdChangeEmployeeName__Int32__String.
+Manager
 
 Assign employee:
 NPC_Manager.InvokeUserCode_CmdChangeEmployeePriority__Int32__Int32.
+Manager
 
 Load priorities to employee:
 NPC_Manager.InvokeUserCode_CmdLoadPrioritiesLayout__Int32[].
+Manager
 
 Taking a loan:
 DebtManager.InvokeUserCode_CmdRequestLoan__Int32__Int32__Int32.
+Manager
 
 Buy storage space:
 UpgradesManager.InvokeUserCode_CmdAddStorage__Int32.
+Manager
 
 Picking up box from storage:
 PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
 Data_Container.InvokeUserCode_CmdUpdateArrayValuesStorage__Int32__Int32__Int32.
 PlayerNetwork.InvokeUserCode_CmdSetBoxColorToEveryone__Int32.
+Restocker
 
 Putting box in storage:
 PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
 Data_Container.InvokeUserCode_CmdUpdateArrayValuesStorage__Int32__Int32__Int32.
+Restocker
 
 Picking up box from ground:
 PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
 NetworkSpawner.InvokeUserCode_CmdDestroyBox__GameObject.
 PlayerNetwork.InvokeUserCode_CmdSetBoxColorToEveryone__Int32.
+Restocker
 
 Putting box on ground:
 PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
 ManagerBlackboard.InvokeUserCode_CmdSpawnBoxFromPlayer__Vector3__Int32__Int32__Single.
+Restocker
 
 Picking up tools:
 PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
 NetworkSpawner.InvokeUserCode_CmdDestroyBox__GameObject.
+General
 
 Dropping tools:
 PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
 NetworkSpawner.InvokeUserCode_CmdSpawnProp__Int32__Vector3__Vector3.
+General
 
 Cardboard baler:
 PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
 CardboardBaler.InvokeUserCode_CmdAddBoxToBaler.
+Restocker
 
 Buying structures:
 NetworkSpawner.InvokeUserCode_CmdSpawn__Int32__Vector3__Vector3.
 GameData.InvokeUserCode_CmdAlterFunds__Single.
+Manager
 
 Selling structures:
 GameData.InvokeUserCode_CmdAlterFundsWithoutExperience__Single.
 NetworkSpawner.InvokeUserCode_CmdDestroyBox__GameObject.
+Manager
 
 Moving structures:
 NetworkSpawner.InvokeUserCode_CmdObjectMove__GameObject__Vector3__Quaternion.
+Manager
 
 Ride mini transport vehicle:
 MiniTransportBehaviour.InvokeUserCode_CmdRequestOwnership__GameObject.
-[Info   : Unity Log] AddEventHandlerComponent: PlayMakerTriggerEnter
 PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
+Restocker
 
 Honk mini transport vehicle:
 MiniTransportBehaviour.InvokeUserCode_CmdHorn.
+Restocker
 
 Run into stuff with mini transport vehicle:
 MiniTransportBehaviour.InvokeUserCode_CmdCollisionHit__Vector3__Single.
+Restocker
 
 Put product onto shelf from order tray:
 Data_Container.InvokeUserCode_CmdUpdateArrayValues__Int32__Int32__Int32.
 PlayerNetwork.InvokeUserCode_CmdUpdateTrayToEveryone__String.
+Restocker
 
 Put a box into mini transport vehicle:
 PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
 MiniTransportBehaviour.InvokeUserCode_CmdUpdateArrayValuesStorage__Int32__Int32__Int32.
+Restocker
 
 Take a box out of mini transport vehicle:
 PlayerNetwork.InvokeUserCode_CmdChangeEquippedItem__Int32.
 MiniTransportBehaviour.InvokeUserCode_CmdUpdateArrayValuesStorage__Int32__Int32__Int32.
 PlayerNetwork.InvokeUserCode_CmdSetBoxColorToEveryone__Int32.
+Restocker
 
 Put product on sale:
 ProductListing.InvokeUserCode_CmdSetProductOnSale__Int32__Int32.
