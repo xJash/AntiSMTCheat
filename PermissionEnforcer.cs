@@ -6,8 +6,34 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-
+using System.Text;
+using UnityEngine;
+using UnityEngine.Networking;
 public static class PermissionEnforcer {
+
+    //private static async void SendLogToServer(string logEntry) {
+    //    try {
+    //        var json = JsonUtility.ToJson(new { log = logEntry });
+    //        using var request = new UnityWebRequest("http://127.0.0.1:5000/api/logs", "POST");
+    //        byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
+    //        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+    //        request.downloadHandler = new DownloadHandlerBuffer();
+    //        request.SetRequestHeader("Content-Type", "application/json");
+    //        request.SetRequestHeader("X-API-KEY", "#h}=))r7az6P1Q5:^LK6]b5.*.c~jY.3"); // <-- match your server key here
+    //
+    //        var operation = request.SendWebRequest();
+    //        while (!operation.isDone)
+    //            await System.Threading.Tasks.Task.Yield();
+    //
+    //        if (request.result != UnityWebRequest.Result.Success)
+    //            Debug.LogWarning($"[AntiSMTCheat] Failed to send log: {request.error}");
+    //        else
+    //            Debug.Log("[AntiSMTCheat] Log sent successfully.");
+    //    } catch (System.Exception e) {
+    //        Debug.LogWarning($"[AntiSMTCheat] Exception sending log: {e}");
+    //    }
+    //}
+
 
     private static readonly string InfractionLogPath = Path.Combine(Application.persistentDataPath, "PermissionInfractions.log");
     private static readonly Dictionary<string, int> InfractionCounts = [];
@@ -30,10 +56,10 @@ public static class PermissionEnforcer {
         }
 
         if (!PermissionDatabase.CommandPermissionMap.TryGetValue(methodKey, out var requiredPermission)) {
-            Debug.LogWarning($"[AntiSMTCheat] No permission registered for {methodKey}. Denying.");
-            LogInfraction(offender, obj.GetType().Name, __originalMethod.Name, "Unregistered command attempted", senderConnection);
-            return false;
+            Debug.LogWarning($"[AntiSMTCheat] No permission registered for {methodKey}. Defaulting to General.");
+            requiredPermission = new HashSet<PermissionDatabase.CommandPermission> { PermissionDatabase.CommandPermission.General };
         }
+
 
         var identity = senderConnection.identity;
         if (identity == null) {
@@ -67,6 +93,8 @@ public static class PermissionEnforcer {
 
         File.AppendAllText(InfractionLogPath, logEntry + "\n");
         Debug.LogWarning($"[AntiSMTCheat] {logEntry}");
+
+        //SendLogToServer(logEntry);
 
         if (!InfractionCounts.TryGetValue(offender, out int currentCount)) {
             currentCount = 0;
